@@ -6,12 +6,13 @@ use App\Entity\Post;
 use App\Repository\PostRepository;
 use App\Services\PostServices;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -57,41 +58,23 @@ class PostController extends AbstractController
 
     /**
      * recuperation de tous les posts dans la table
-     * @Route("/posts/{id<[0-9]+>}",name ="show_post", methods={"GET","POST"})
+     * @Route("/posts/{post_id<[0-9]+>}",name ="show_post", methods={"GET","POST"})
+     * @Entity("post", expr="repository.find(post_id)")
      */
     public function showPost(Post $post): Response
     {
-        $post = $this->postRepository->find($post->getId());
-//        /dump($post->getImages()->getValues());
 
         return $this->json($post,200,[
             'Content-type' => 'Application/json',
-        ],['groups' => 'post:read']);
+        ],['groups' => 'post_read']);
     }
 
 
     /**
-     * @param Request $request
-     * @param ValidatorInterface $validator
-     * @param SerializerInterface $serializer
-     * @return Response
      * @Route("/posts/",name ="create_post", methods={"POST"})
      */
     public function createPost(Request $request,ValidatorInterface $validator,SerializerInterface $serializer, EntityManagerInterface $em): Response
     {
-        // recup images
-//        dd($request);
-//        $file =$request->files->get('image');
-//
-//        //  nomage du file
-//        $filename = time().'-'.$file->getClientOriginalName().'.'.$file->guessClientExtension();
-//
-//        // et deplacement
-//        $file->move( 'public',$filename);
-
-
-
-
 
         try {
 
@@ -104,13 +87,10 @@ class PostController extends AbstractController
 
             //--- validation
             $errors = $validator->validate($post);
-            if(count($errors) < 0){
+            if(count($errors) > 0){
 
                 // envoie des erreur en json
-                return $this->json([
-                    'statue' =>  400,
-                    'message' => $errors
-                ],400);
+                return $this->json( $errors,400);
             }
 
 
@@ -120,7 +100,7 @@ class PostController extends AbstractController
 
             return $this->json($post,200,[
                 'Content-type' => 'Application/json',
-            ],['groups' => 'post:read']);
+            ],['groups' => 'post_read']);
 
         }catch (NotEncodableValueException $notEncodableValueException){
 
@@ -128,6 +108,97 @@ class PostController extends AbstractController
                 'statue' =>  400,
                 'message' => $notEncodableValueException
              ],400);
+        }
+
+
+    }
+
+
+    /**
+     * @Route("/posts/edit/{post_id<[0-9]+>}",name ="edit_post", methods={"PUT","GET"})
+     * @Entity("post", expr="repository.find(post_id)")
+     */
+    public function EditPost(Post $post, Request $request,ValidatorInterface $validator,SerializerInterface $serializer, EntityManagerInterface $em ): Response
+    {
+
+        //--- récuperation du post concerner
+        //autorisation dedition user
+
+
+        try {
+
+            //--- récupération du contenu
+            $json_request = $request->getContent();
+            //($json_request);
+
+            //--- déserialize
+             $post_d = $serializer->deserialize($json_request,Post::class,'json');
+
+             $post->setTitle( $post_d->getTitle());
+             $post->setContent($post_d->getContent());
+
+
+            //--- validation
+            $errors = $validator->validate($post);
+            if(count($errors) > 0){
+                // envoie des erreurs en json
+                return $this->json( $errors,400);
+            }
+
+
+
+            //--- register
+            $em->persist($post);
+            $em->flush();
+
+            return $this->json($post,200,
+                ['Content-type' => 'Application/json',
+                ],['groups' => 'post_read']);
+
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' =>  400,
+                'message' => $notEncodableValueException
+            ],400);
+        }
+
+
+    }
+
+    /**
+     * @return Response
+     * @Route("/posts/{post_id<[0-9]+>}",name ="delete_post", methods={"DELETE"})
+     * @Entity("post", expr="repository.find(post_id)")
+     */
+    public function deletePost(Post $post, EntityManagerInterface $em ): Response
+    {
+
+
+
+        //autorisation dedition user peut suprimer le post
+
+
+        try {
+            if ($post){
+
+                //supression des images associer au post en base de donneées et dans le dossier
+
+                //--- deregister
+                $em->remove($post);
+                $em->flush();
+
+                return $this->json(["supression du post id {$post->getId()} "],200);
+            }
+
+
+
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' =>  400,
+                'message' => $notEncodableValueException
+            ],400);
         }
 
 
