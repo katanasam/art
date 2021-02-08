@@ -2,9 +2,13 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timerr;
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=PostRepository::class)
@@ -13,37 +17,44 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 class Post
 {
+    // importe les propriéter de la classe timer
+    /**
+     * App\Entity\Traits\Timerr
+     */
+    use Timerr;
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups("post:read"))
+     * @Groups("post_read")
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups("post:read")
+     * @Groups("post_read")
+     * @Assert\NotBlank
      */
     private $Title;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     *@Groups("post:read")
+     * @Groups("post_read")
+     * @Assert\NotBlank
      */
     private $content;
 
     /**
-     * @ORM\Column(type="datetime")
-     *@Groups("post:read")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="post")
+     * @Groups("post_read")
      */
-    private $createdAt;
+    private $images;
 
-    /**
-     * @ORM\Column(type="datetime")
-     *@Groups("post:read")
-     */
-    private $updateAt;
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
 
 
@@ -76,41 +87,36 @@ class Post
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
-
-        return $this;
-    }
-
-    public function getUpdateAt(): ?\DateTimeInterface
-    {
-        return $this->updateAt;
-    }
-
-    public function setUpdateAt(\DateTimeInterface $updateAt): self
-    {
-        $this->updateAt = $updateAt;
-
-        return $this;
-    }
-
     /**
-     * la methode sera appeler avant la creation dun post
-     * @ORM\PrePersist()
-     * la methode sera appeler aprés la Modification dun post
-     * @ORM\PreUpdate())
+     * @return Collection|Image[]
      */
-    public function UpdateDate(){
-
-        $this->setCreatedAt(new \DateTimeImmutable());
-        $this->setUpdateAt(new \DateTimeImmutable());
+    public function getImages(): Collection
+    {
+        return $this->images;
     }
+
+    public function addImage(Image $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getPost() === $this) {
+                $image->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
 
 
 }

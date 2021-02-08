@@ -1,0 +1,5 @@
+[ Posts ]
+action = getAllPost() =>  methods = ["GET"] => route = "/posts/"
+action = showPost() => methods = ["POST","GET"] => route = "/posts/{id}/"
+action = createPost() => methods = ["POST"] => "/posts/"
+

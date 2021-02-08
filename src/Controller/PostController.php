@@ -10,6 +10,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -39,18 +41,18 @@ class PostController extends AbstractController
      * recuperation de tous les posts dans la table
      * @Route("/posts/",name ="list_posts", methods={"GET"})
      */
-    public function index(): Response
+    public function getAllPost(): Response
     {
+
         // récuperation des données
         $all_posts = $this->postRepository->findAll();
 
         // il manque le champ pour l'auteur du post
+        //dd($all_posts);
 
+        // envoie d'une réponse à l'Api
+        return $this->json($all_posts,200,[],["groups"=>"post_read"]);
 
-        // envoie d'une reponse à l'Api
-        return $this->json($all_posts,200,[
-            'Content-type' => 'Application/json',
-        ],['groups' => 'post:read']);
     }
 
     /**
@@ -60,6 +62,7 @@ class PostController extends AbstractController
     public function showPost(Post $post): Response
     {
         $post = $this->postRepository->find($post->getId());
+//        /dump($post->getImages()->getValues());
 
         return $this->json($post,200,[
             'Content-type' => 'Application/json',
@@ -76,25 +79,57 @@ class PostController extends AbstractController
      */
     public function createPost(Request $request,ValidatorInterface $validator,SerializerInterface $serializer, EntityManagerInterface $em): Response
     {
-        // recuperation du contenut
         // recup images
-        // validation
-        // register
-
-        // récupération du contenu
-        $json_request = $request->getContent();
-
-
-        // deserialize
-        // et transphormation en objet
-        $post = $serializer->deserialize($json_request,Post::class,'json');
-
-        $em->persist($post);
-        $em->flush();
+//        dd($request);
+//        $file =$request->files->get('image');
+//
+//        //  nomage du file
+//        $filename = time().'-'.$file->getClientOriginalName().'.'.$file->guessClientExtension();
+//
+//        // et deplacement
+//        $file->move( 'public',$filename);
 
 
-        return $this->json($post,200,[
-            'Content-type' => 'Application/json',
-        ]);
+
+
+
+        try {
+
+            //--- récupération du contenu
+            $json_request = $request->getContent();
+
+            //--- deserialize
+            $post = $serializer->deserialize($json_request,Post::class,'json');
+
+
+            //--- validation
+            $errors = $validator->validate($post);
+            if(count($errors) < 0){
+
+                // envoie des erreur en json
+                return $this->json([
+                    'statue' =>  400,
+                    'message' => $errors
+                ],400);
+            }
+
+
+            //--- register
+            $em->persist($post);
+            $em->flush();
+
+            return $this->json($post,200,[
+                'Content-type' => 'Application/json',
+            ],['groups' => 'post:read']);
+
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' =>  400,
+                'message' => $notEncodableValueException
+             ],400);
+        }
+
+
     }
 }
