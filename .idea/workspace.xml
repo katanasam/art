@@ -2,12 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9afe9637-517e-4a05-83fb-cf38bc720b43" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/php.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.env" afterPath="$PROJECT_DIR$/.env" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.json" afterPath="$PROJECT_DIR$/composer.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/composer.lock" afterPath="$PROJECT_DIR$/composer.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/route.txt" afterPath="$PROJECT_DIR$/route.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/FileController.php" afterPath="$PROJECT_DIR$/src/Controller/FileController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/bundles.php" afterPath="$PROJECT_DIR$/config/bundles.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/PostController.php" afterPath="$PROJECT_DIR$/src/Controller/PostController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Services/PostServices.php" afterPath="$PROJECT_DIR$/src/Services/PostServices.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/symfony.lock" afterPath="$PROJECT_DIR$/symfony.lock" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,33 +22,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="composer.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/composer.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
-              <folding>
-                <marker date="1612813709175" expanded="true" signature="129:1233" ph="{&quot;php&quot;: &quot;&gt;=7.2.5&quot;...}" />
-                <marker date="1612813709175" expanded="true" signature="1249:1389" ph="{&quot;optimize-autoloader&quot;: true...}" />
-                <marker date="1612813709175" expanded="true" signature="1317:1352" ph="{&quot;*&quot;: &quot;dist&quot;...}" />
-                <marker date="1612813709175" expanded="true" signature="1407:1471" ph="{...}" />
-                <marker date="1612813709175" expanded="true" signature="1426:1465" ph="{&quot;App\&quot;: &quot;src/&quot;...}" />
-                <marker date="1612813709175" expanded="true" signature="1493:1566" ph="{...}" />
-                <marker date="1612813709175" expanded="true" signature="1512:1560" ph="{&quot;App\Tests\&quot;: &quot;tests/&quot;...}" />
-                <marker date="1612813709175" expanded="true" signature="1583:1706" ph="{&quot;symfony/polyfill-ctype&quot;: &quot;*&quot;...}" />
-                <marker date="1612813709175" expanded="true" signature="1723:2002" ph="{...}" />
-                <marker date="1612813709175" expanded="true" signature="1749:1859" ph="{&quot;cache:clear&quot;: &quot;symfony-cmd&quot;...}" />
-                <marker date="1612813709175" expanded="true" signature="1889:1928" ph="[...]" />
-                <marker date="1612813709175" expanded="true" signature="2020:2058" ph="{&quot;symfony/symfony&quot;: &quot;*&quot;...}" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Post.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Entity/Post.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="475">
+            <state relative-caret-position="25">
               <caret line="43" column="7" lean-forward="false" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
               <folding>
                 <element signature="e#30#59#0#PHP" expanded="true" />
@@ -54,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PostController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PostController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Controller/PostController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="187" column="35" lean-forward="true" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
+            <state relative-caret-position="1025">
+              <caret line="41" column="10" lean-forward="false" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
               <folding>
                 <element signature="e#34#54#0#PHP" expanded="true" />
               </folding>
@@ -69,42 +49,10 @@
       <file leaf-file-name="PostServices.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Services/PostServices.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
+            <state relative-caret-position="753">
+              <caret line="38" column="35" lean-forward="false" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
               <folding>
                 <element signature="e#115#149#0#PHP" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="AbstractController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/vendor/symfony/framework-bundle/Controller/AbstractController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3425">
-              <caret line="178" column="58" lean-forward="false" selection-start-line="178" selection-start-column="58" selection-end-line="178" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Timerr.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Traits/Timerr.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="21" column="7" lean-forward="false" selection-start-line="21" selection-start-column="7" selection-end-line="21" selection-end-column="7" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Image.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Entity/Image.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="725">
-              <caret line="29" column="27" lean-forward="false" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-              <folding>
-                <element signature="e#30#65#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,18 +61,8 @@
       <file leaf-file-name="route.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/route.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FileController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/FileController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="631">
-              <caret line="33" column="7" lean-forward="false" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+            <state relative-caret-position="150">
+              <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -133,9 +71,61 @@
       <file leaf-file-name="ParamConverter.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/vendor/sensio/framework-extra-bundle/src/Configuration/ParamConverter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-58">
-              <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+            <state relative-caret-position="200">
+              <caret line="8" column="49" lean-forward="false" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="49" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Entity.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/vendor/sensio/framework-extra-bundle/src/Configuration/Entity.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="350">
+              <caret line="21" column="27" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1300">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="lexik_jwt_authentication.yaml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="100">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="security.yaml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="767">
+              <caret line="36" column="68" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="36" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AuthenticationController.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/Security/AuthenticationController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="53">
+              <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+              <folding>
+                <element signature="e#43#108#0#PHP" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -156,7 +146,6 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/.env.local" />
         <option value="$PROJECT_DIR$/migrations/Version20210204165654.php" />
-        <option value="$PROJECT_DIR$/src/Services/PostServices.php" />
         <option value="$PROJECT_DIR$/src/Entity/Traits/Timer" />
         <option value="$PROJECT_DIR$/src/Entity/Traits/Timer.php" />
         <option value="$PROJECT_DIR$/migrations/Version20210205205901.php" />
@@ -166,7 +155,11 @@
         <option value="$PROJECT_DIR$/src/Entity/Post.php" />
         <option value="$PROJECT_DIR$/src/Controller/FileController.php" />
         <option value="$PROJECT_DIR$/route.txt" />
+        <option value="$PROJECT_DIR$/src/Services/PostServices.php" />
         <option value="$PROJECT_DIR$/src/Controller/PostController.php" />
+        <option value="$PROJECT_DIR$/src/Controller/Security/AuthController.php" />
+        <option value="$PROJECT_DIR$/src/Controller/Security/AuthenticationController.php" />
+        <option value="$PROJECT_DIR$/config/packages/security.yaml" />
       </list>
     </option>
   </component>
@@ -181,12 +174,14 @@
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="130" />
-    <option name="y" value="30" />
-    <option name="width" value="1722" />
+    <option name="x" value="6" />
+    <option name="y" value="82" />
+    <option name="width" value="1563" />
     <option name="height" value="1150" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -202,7 +197,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -213,7 +207,7 @@
             <path>
               <item name="ApiArtStarter" type="b2602c69:ProjectViewProjectNode" />
               <item name="ApiArtStarter" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="migrations" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="config" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="ApiArtStarter" type="b2602c69:ProjectViewProjectNode" />
@@ -241,6 +235,13 @@
               <item name="ApiArtStarter" type="b2602c69:ProjectViewProjectNode" />
               <item name="ApiArtStarter" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Controller" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="Security" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="ApiArtStarter" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ApiArtStarter" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="src" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="Entity" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
@@ -260,15 +261,19 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.PHP" />
+    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\cheik\Desktop\ARTstater\ApiArtStarter\src\Controller\Security" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\cheik\Desktop\ARTstater\ApiArtStarter" />
     </key>
@@ -299,18 +304,19 @@
       <workItem from="1612549275927" duration="11349000" />
       <workItem from="1612567329597" duration="957000" />
       <workItem from="1612640473495" duration="3179000" />
-      <workItem from="1612799631950" duration="13619000" />
+      <workItem from="1612799631950" duration="14224000" />
+      <workItem from="1612891233681" duration="9432000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="39278000" />
+    <option name="totallyTimeSpent" value="49315000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="130" y="30" width="1722" height="1150" extended-state="0" />
+    <frame x="6" y="82" width="1563" height="1150" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19253911" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17232202" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -341,72 +347,10 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/Entity/Image.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="29" column="27" lean-forward="false" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
-          <folding>
-            <element signature="e#30#65#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Post.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="400">
-          <caret line="16" column="10" lean-forward="false" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
-          <folding>
-            <element signature="e#30#59#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/composer.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-          <folding>
-            <marker date="1612813709175" expanded="true" signature="129:1233" ph="{&quot;php&quot;: &quot;&gt;=7.2.5&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1249:1389" ph="{&quot;optimize-autoloader&quot;: true...}" />
-            <marker date="1612813709175" expanded="true" signature="1317:1352" ph="{&quot;*&quot;: &quot;dist&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1407:1471" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1426:1465" ph="{&quot;App\&quot;: &quot;src/&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1493:1566" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1512:1560" ph="{&quot;App\Tests\&quot;: &quot;tests/&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1583:1706" ph="{&quot;symfony/polyfill-ctype&quot;: &quot;*&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1723:2002" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1749:1859" ph="{&quot;cache:clear&quot;: &quot;symfony-cmd&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1889:1928" ph="[...]" />
-            <marker date="1612813709175" expanded="true" signature="2020:2058" ph="{&quot;symfony/symfony&quot;: &quot;*&quot;...}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/PostController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1550">
-          <caret line="62" column="0" lean-forward="true" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
-          <folding>
-            <element signature="e#34#54#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Post.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1150">
-          <caret line="46" column="4" lean-forward="true" selection-start-line="46" selection-start-column="4" selection-end-line="46" selection-end-column="4" />
-          <folding>
-            <element signature="e#30#59#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/serializer/Normalizer/NormalizerInterface.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="700">
           <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -472,18 +416,18 @@
         <state relative-caret-position="275">
           <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
           <folding>
-            <marker date="1612813709175" expanded="true" signature="129:1233" ph="{&quot;php&quot;: &quot;&gt;=7.2.5&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1249:1389" ph="{&quot;optimize-autoloader&quot;: true...}" />
-            <marker date="1612813709175" expanded="true" signature="1317:1352" ph="{&quot;*&quot;: &quot;dist&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1407:1471" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1426:1465" ph="{&quot;App\&quot;: &quot;src/&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1493:1566" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1512:1560" ph="{&quot;App\Tests\&quot;: &quot;tests/&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1583:1706" ph="{&quot;symfony/polyfill-ctype&quot;: &quot;*&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1723:2002" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1749:1859" ph="{&quot;cache:clear&quot;: &quot;symfony-cmd&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1889:1928" ph="[...]" />
-            <marker date="1612813709175" expanded="true" signature="2020:2058" ph="{&quot;symfony/symfony&quot;: &quot;*&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="129:1285" ph="{&quot;php&quot;: &quot;&gt;=7.2.5&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1301:1441" ph="{&quot;optimize-autoloader&quot;: true...}" />
+            <marker date="1612899530964" expanded="true" signature="1369:1404" ph="{&quot;*&quot;: &quot;dist&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1459:1523" ph="{...}" />
+            <marker date="1612899530964" expanded="true" signature="1478:1517" ph="{&quot;App\&quot;: &quot;src/&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1545:1618" ph="{...}" />
+            <marker date="1612899530964" expanded="true" signature="1564:1612" ph="{&quot;App\Tests\&quot;: &quot;tests/&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1635:1758" ph="{&quot;symfony/polyfill-ctype&quot;: &quot;*&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1775:2054" ph="{...}" />
+            <marker date="1612899530964" expanded="true" signature="1801:1911" ph="{&quot;cache:clear&quot;: &quot;symfony-cmd&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1941:1980" ph="[...]" />
+            <marker date="1612899530964" expanded="true" signature="2072:2110" ph="{&quot;symfony/symfony&quot;: &quot;*&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -502,7 +446,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="700">
           <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -611,7 +554,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="700">
           <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -698,16 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Services/PostServices.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="5" lean-forward="false" selection-start-line="0" selection-start-column="5" selection-end-line="0" selection-end-column="5" />
-          <folding>
-            <element signature="e#115#149#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/vendor/symfony/framework-bundle/Controller/AbstractController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3425">
@@ -718,21 +650,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/composer.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="19" column="34" lean-forward="false" selection-start-line="19" selection-start-column="34" selection-end-line="19" selection-end-column="34" />
+        <state relative-caret-position="475">
+          <caret line="20" column="34" lean-forward="false" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
           <folding>
-            <marker date="1612813709175" expanded="true" signature="129:1233" ph="{&quot;php&quot;: &quot;&gt;=7.2.5&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1249:1389" ph="{&quot;optimize-autoloader&quot;: true...}" />
-            <marker date="1612813709175" expanded="true" signature="1317:1352" ph="{&quot;*&quot;: &quot;dist&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1407:1471" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1426:1465" ph="{&quot;App\&quot;: &quot;src/&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1493:1566" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1512:1560" ph="{&quot;App\Tests\&quot;: &quot;tests/&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1583:1706" ph="{&quot;symfony/polyfill-ctype&quot;: &quot;*&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1723:2002" ph="{...}" />
-            <marker date="1612813709175" expanded="true" signature="1749:1859" ph="{&quot;cache:clear&quot;: &quot;symfony-cmd&quot;...}" />
-            <marker date="1612813709175" expanded="true" signature="1889:1928" ph="[...]" />
-            <marker date="1612813709175" expanded="true" signature="2020:2058" ph="{&quot;symfony/symfony&quot;: &quot;*&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="129:1285" ph="{&quot;php&quot;: &quot;&gt;=7.2.5&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1301:1441" ph="{&quot;optimize-autoloader&quot;: true...}" />
+            <marker date="1612899530964" expanded="true" signature="1369:1404" ph="{&quot;*&quot;: &quot;dist&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1459:1523" ph="{...}" />
+            <marker date="1612899530964" expanded="true" signature="1478:1517" ph="{&quot;App\&quot;: &quot;src/&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1545:1618" ph="{...}" />
+            <marker date="1612899530964" expanded="true" signature="1564:1612" ph="{&quot;App\Tests\&quot;: &quot;tests/&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1635:1758" ph="{&quot;symfony/polyfill-ctype&quot;: &quot;*&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1775:2054" ph="{...}" />
+            <marker date="1612899530964" expanded="true" signature="1801:1911" ph="{&quot;cache:clear&quot;: &quot;symfony-cmd&quot;...}" />
+            <marker date="1612899530964" expanded="true" signature="1941:1980" ph="[...]" />
+            <marker date="1612899530964" expanded="true" signature="2072:2110" ph="{&quot;symfony/symfony&quot;: &quot;*&quot;...}" />
           </folding>
         </state>
       </provider>
@@ -767,7 +699,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/Image.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="725">
+        <state relative-caret-position="675">
           <caret line="29" column="27" lean-forward="false" selection-start-line="29" selection-start-column="27" selection-end-line="29" selection-end-column="27" />
           <folding>
             <element signature="e#30#65#0#PHP" expanded="true" />
@@ -779,13 +711,28 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="700">
           <caret line="38" column="20" lean-forward="false" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/FileController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="750">
+          <caret line="33" column="7" lean-forward="false" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/sensio/framework-extra-bundle/src/Configuration/Entity.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="21" column="27" lean-forward="false" selection-start-line="21" selection-start-column="20" selection-end-line="21" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Entity/Post.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="475">
+        <state relative-caret-position="25">
           <caret line="43" column="7" lean-forward="false" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
           <folding>
             <element signature="e#30#59#0#PHP" expanded="true" />
@@ -793,37 +740,73 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/FileController.php">
+    <entry file="file://$PROJECT_DIR$/src/Services/PostServices.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="33" column="7" lean-forward="false" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
-          <folding />
+        <state relative-caret-position="753">
+          <caret line="38" column="35" lean-forward="false" selection-start-line="38" selection-start-column="35" selection-end-line="38" selection-end-column="35" />
+          <folding>
+            <element signature="e#115#149#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/route.txt">
+    <entry file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="9" lean-forward="false" selection-start-line="0" selection-start-column="9" selection-end-line="0" selection-end-column="9" />
+        <state relative-caret-position="100">
+          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/vendor/sensio/framework-extra-bundle/src/Configuration/ParamConverter.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-58">
-          <caret line="19" column="6" lean-forward="false" selection-start-line="19" selection-start-column="6" selection-end-line="19" selection-end-column="6" />
+        <state relative-caret-position="200">
+          <caret line="8" column="49" lean-forward="false" selection-start-line="8" selection-start-column="48" selection-end-line="8" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/Security/AuthenticationController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="53">
+          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding>
+            <element signature="e#43#108#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/route.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1300">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/PostController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="187" column="35" lean-forward="true" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
+        <state relative-caret-position="1025">
+          <caret line="41" column="10" lean-forward="false" selection-start-line="41" selection-start-column="10" selection-end-line="41" selection-end-column="10" />
           <folding>
             <element signature="e#34#54#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="767">
+          <caret line="36" column="68" lean-forward="true" selection-start-line="17" selection-start-column="8" selection-end-line="36" selection-end-column="68" />
+          <folding />
         </state>
       </provider>
     </entry>

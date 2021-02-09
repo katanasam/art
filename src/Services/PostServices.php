@@ -13,9 +13,12 @@ use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 
+/**
+ * Class PostServices
+ * @package App\Services
+ */
 class PostServices
 {
-
     /**
      * post repository
      */
@@ -26,11 +29,15 @@ class PostServices
      */
     private $em;
 
+    /**
+     * PostServices constructor.
+     * @param PostRepository $postRepository
+     * @param EntityManagerInterface $entityManager
+     */
     public function __construct(PostRepository $postRepository, EntityManagerInterface $entityManager)
     {
         $this->postRP = $postRepository;
         $this->em = $entityManager;
     }
-
 
 }
