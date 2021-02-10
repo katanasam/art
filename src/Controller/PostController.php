@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Repository\PostRepository;
 use App\Services\PostServices;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,6 +14,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -51,7 +54,7 @@ class PostController extends AbstractController
      * recuperation de tous les posts dans la table
      * @Route("posts/lists",name ="list_posts", methods={"GET"})
      */
-    public function getAllPost()
+    public function getAllPost( )
     : JsonResponse
     {
 
@@ -106,9 +109,13 @@ class PostController extends AbstractController
         Request $request,
         ValidatorInterface $validator,
         SerializerInterface $serializer,
-        EntityManagerInterface $em)
+        EntityManagerInterface $em,
+        UserPasswordEncoderInterface $passwordEncoder)
     : JsonResponse
     {
+        $user = new User();
+        $user->setEmail('admin@mail.com');
+        $user->setPassword($passwordEncoder->encodePassword($user,'0000'));
 
         // il faut etre un user pour creer un post
         try {
@@ -130,6 +137,7 @@ class PostController extends AbstractController
 
             //--- register
             $em->persist($post);
+            $em->persist($user);
             $em->flush();
 
             return $this->json($post,200,[
