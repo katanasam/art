@@ -9,6 +9,7 @@
 namespace App\Services;
 
 
+use App\Entity\User;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -40,4 +41,15 @@ class PostServices
         $this->em = $entityManager;
     }
 
+
+    /**
+     * @param User $user
+     * @return EntityManagerInterface
+     */
+    public function AllUserPosts(User $user)
+    {
+        $all_user_posts = $this->postRP->findPostByUser($user->getId());
+
+        return $this->$all_user_posts;
+    }
 }

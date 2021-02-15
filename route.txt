@@ -1,6 +1,16 @@
 [ Posts ]
-action = getAllPost() =>  methods = ["GET"] => route => "/posts/"
+action = getAllPost() => methods = ["GET"] => route => "/posts/"
 action = createPost() => methods = ["POST"] => route => "/posts/"
-action = showPost() => methods = ["POST","GET"] => route => "/posts/{id}/"
-action = editPost() => methods = ["PUT"] => route => "/posts/edit/{id}"
+action = showPost()   => methods = ["POST","GET"] => route => "/posts/{id}/"
+action = editPost()   => methods = ["PUT"] => route => "/posts/edit/{id}"
+
+action = getAllUserPost() => methods = ["GET"] => route => "/posts/{user_id}"
+action = createUserPost() => methods = ["POST"] => route => "/posts/{user_id}"
+action = editUserPost()   => methods = ["PUT"] => route => "/posts/edit/{id}/{user_id}"
+
+
 action = deletePost() => methods = ["DELETE"] => route => "/posts/{id}"
+
+
+
+[Files]

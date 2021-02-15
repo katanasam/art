@@ -4,15 +4,20 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class PostController
+ * @package App\Controller
+ * @Route("api/")
+ */
 class FileController extends AbstractController
 {
     /**
-     * @Route("/file", name="file",methods={"GET"})
+     * @Route("file", name="file",methods={"GET"})
      */
-    public function getfile(Request $request): Response
+    public function getfile(Request $request): JsonResponse
     {
 
         return $this->json([
@@ -21,24 +26,26 @@ class FileController extends AbstractController
     }
 
     /**
-     * @Route("/file", name="file",methods={"POST"})
+     * @param Request $request
+     * @Route("file", name="file",methods={"POST"})
+     * @return JsonResponse
      */
-    public function Addfile(Request $request): Response
+    public function Addfile(Request $request): JsonResponse
     {
 
-        // recup images
-//        /dd($request);
+        // récup images
+        //dd($request);
         $file =$request->files->get('image');
 
-        //  nomage du file
+        //  nommage du file
         $filename = time().'-'.$file->getClientOriginalName().'.'.$file->guessClientExtension();
 
-        // et deplacement
+        // et déplacement
         $file->move( 'public',$filename);
 
 
         return $this->json([
-            'message' => 'le fichier a ['.$file->getClientOriginalName().']!',
+            'message' => 'le fichier a ['.$file->getClientOriginalName().']! SUCCESS.',
         ],200);
     }
 }

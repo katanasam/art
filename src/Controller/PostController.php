@@ -8,13 +8,10 @@ use App\Repository\PostRepository;
 use App\Services\PostServices;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
@@ -59,9 +56,6 @@ class PostController extends AbstractController
     {
 
         // récuperation des données
-        // il manque le champ pour l'auteur du post
-        $all_posts = $this->postRepository->findAll();
-
 
         // envoie d'une réponse à l'Api
         return $this->json($this->postRepository->findAll(),200,[],["groups"=>"post_read"]);
@@ -70,19 +64,21 @@ class PostController extends AbstractController
 
     /**
      * recuperation de tous les posts dans la table
-     * @Route("posts/lists/{user_id}",name ="list_user_posts", methods={"GET"})
+     * @Route("posts/{user_id}/lists",name ="list_user_posts", methods={"GET"})
      */
-    public function getAllUserPost()
+    public function getAllUserPost($user_id)
     : JsonResponse
     {
+        //$user =$this->getUser();
+        //dd($user_id);
 
         // récuperation des données
         // il manque le champ pour l'auteur du post
-        $all_posts = $this->postRepository->findAll();
-
+        $all_user_posts = $this->postService->AllUserPosts($user_id);
+        $all_user_posts = $this->postRepository->findPostByUser($user_id);
 
         // envoie d'une réponse à l'Api
-        return $this->json($this->postRepository->findAll(),200,[],["groups"=>"post_read"]);
+        return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
 
     }
 
@@ -109,15 +105,12 @@ class PostController extends AbstractController
         Request $request,
         ValidatorInterface $validator,
         SerializerInterface $serializer,
-        EntityManagerInterface $em,
-        UserPasswordEncoderInterface $passwordEncoder)
+        EntityManagerInterface $em)
     : JsonResponse
     {
-        $user = new User();
-        $user->setEmail('admin@mail.com');
-        $user->setPassword($passwordEncoder->encodePassword($user,'0000'));
-
         // il faut etre un user pour creer un post
+        $user =$this->getUser();
+
         try {
 
             //--- récupération du contenu
@@ -135,9 +128,10 @@ class PostController extends AbstractController
                 return $this->json( $errors,400);
             }
 
+            $post->setAuthor($user);
+
             //--- register
             $em->persist($post);
-            $em->persist($user);
             $em->flush();
 
             return $this->json($post,200,[

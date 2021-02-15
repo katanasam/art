@@ -51,6 +51,12 @@ class Post
      */
     private $images;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="posts")
+     * @Groups("post_read")
+     */
+    private $author;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -113,6 +119,18 @@ class Post
                 $image->setPost(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

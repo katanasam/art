@@ -13,13 +13,13 @@ Trait Timerr
 
     /**
      * @ORM\Column(type="datetime")
-     *@Groups("post:read")
+     * @Groups("post_read")
      */
     private $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups("post:read")
+     * @Groups("post_read")
      */
     private $updateAt;
 

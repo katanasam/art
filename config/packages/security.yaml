@@ -16,11 +16,11 @@ security:
             security: false
 
         login:
-            pattern: ^/api/login
+            pattern: ^/api/auth/login
             stateless: true
             anonymous: true
             json_login:
-                check_path: /api/login_check
+                check_path: /api/auth/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
@@ -44,6 +44,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-         - { path: ^/api/auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-#         - { path: ^/api/auth/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-         - { path: ^/api, roles: IS_AUTHENTICADED_FULLY }
+         - { path: '^/api/login', roles: IS_AUTHENTICATED_ANONYMOUSLY }
+##         - { path: ^/api/auth/register, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: '^/api', roles: IS_AUTHENTICATED_FULLY }
