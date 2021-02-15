@@ -9,16 +9,22 @@
 namespace App\Services;
 
 
+use App\Entity\Post;
 use App\Entity\User;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use phpDocumentor\Reflection\Types\Object_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class PostServices
  * @package App\Services
  */
-class PostServices
+class PostServices extends GeneralServices
 {
     /**
      * post repository
@@ -28,28 +34,94 @@ class PostServices
     /**
      * Entity manager
      */
-    private $em;
+    protected $entityManager;
 
     /**
      * PostServices constructor.
      * @param PostRepository $postRepository
      * @param EntityManagerInterface $entityManager
      */
-    public function __construct(PostRepository $postRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        PostRepository $postRepository,
+        EntityManagerInterface $entityManager)
     {
+        $this->entityManager = $entityManager;
         $this->postRP = $postRepository;
-        $this->em = $entityManager;
+
+    }
+
+    /**
+     * persist et fluch un objet en base de données
+     * @param  $object
+     */
+    public  function PF($object){
+        //--- register
+        //dd($object);
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+    }
+    /**
+     * Récuperation de tous les posts d'un user
+     * @param Object $user
+     * @return EntityManagerInterface
+     */
+    public function AllUserPosts(Object $user)
+    {
+
+        $all_user_posts = $this->postRP->findPostByUser($user->getId());
+
+        return $all_user_posts;
     }
 
 
     /**
-     * @param User $user
-     * @return EntityManagerInterface
+     * Enrefistre le post dun user
+     * @param object $user
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param SerializerInterface $serializer
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
-    public function AllUserPosts(User $user)
-    {
-        $all_user_posts = $this->postRP->findPostByUser($user->getId());
+    public function registerUserPost(object $user,Request $request,ValidatorInterface $validator ){
 
-        return $this->$all_user_posts;
+        try {
+
+            //--- récupération du contenu
+            $post = $this->getSerializer($request,Post::class);
+
+            //--- validation
+//            $errors = $validator->validate($post);
+//            if(count($errors) > 0){
+//
+//                // envoie des erreur en json
+//                return $this->json( $errors,400);
+//            }
+            $this->getDataValidate($post);
+
+            $post->setAuthor($user);
+            $this->PF($post);
+
+
+
+
+
+            return $this->json($post,200,[
+                'Content-type' => 'Application/json',
+            ],['groups' => 'post_read']);
+
+
+
+
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' =>  400,
+                'message' => $notEncodableValueException
+            ],400);
+        }
+
     }
+
+
 }

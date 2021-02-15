@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use App\Entity\User;
+use App\Controller\Hellper\TokenInsider;
 use App\Repository\PostRepository;
 use App\Services\PostServices;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,45 +45,21 @@ class PostController extends AbstractController
     {
         $this->postRepository = $postRepository;
         $this->postService = $postServices;
+
     }
 
     /**
      * recuperation de tous les posts dans la table
      * @Route("posts/lists",name ="list_posts", methods={"GET"})
      */
-    public function getAllPost( )
+    public function getAllPosts( )
     : JsonResponse
     {
-
-        // récuperation des données
-
-        // envoie d'une réponse à l'Api
         return $this->json($this->postRepository->findAll(),200,[],["groups"=>"post_read"]);
 
     }
-
     /**
-     * recuperation de tous les posts dans la table
-     * @Route("posts/{user_id}/lists",name ="list_user_posts", methods={"GET"})
-     */
-    public function getAllUserPost($user_id)
-    : JsonResponse
-    {
-        //$user =$this->getUser();
-        //dd($user_id);
-
-        // récuperation des données
-        // il manque le champ pour l'auteur du post
-        $all_user_posts = $this->postService->AllUserPosts($user_id);
-        $all_user_posts = $this->postRepository->findPostByUser($user_id);
-
-        // envoie d'une réponse à l'Api
-        return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
-
-    }
-
-    /**
-     * recuperation de tous les posts dans la table
+     * display un post unique avec images,commentaires,user
      * @Route("posts/{post_id<[0-9]+>}",name ="show_post", methods={"GET","POST"})
      * @Entity("post", expr="repository.find(post_id)")
      */
@@ -97,7 +73,6 @@ class PostController extends AbstractController
         ],['groups' => 'post_read']);
     }
 
-
     /**
      * @Route("posts/",name ="create_post", methods={"POST"})
      */
@@ -110,6 +85,7 @@ class PostController extends AbstractController
     {
         // il faut etre un user pour creer un post
         $user =$this->getUser();
+
 
         try {
 
@@ -138,12 +114,15 @@ class PostController extends AbstractController
                 'Content-type' => 'Application/json',
             ],['groups' => 'post_read']);
 
+
+
+
         }catch (NotEncodableValueException $notEncodableValueException){
 
             return $this->json([
                 'statue' =>  400,
                 'message' => $notEncodableValueException
-             ],400);
+            ],400);
         }
 
     }
@@ -170,7 +149,7 @@ class PostController extends AbstractController
             //($json_request);
 
             //--- déserialize
-             $serializer->deserialize($json_request,Post::class,'json',[AbstractNormalizer::OBJECT_TO_POPULATE => $post]);
+            $serializer->deserialize($json_request,Post::class,'json',[AbstractNormalizer::OBJECT_TO_POPULATE => $post]);
 
             //--- register
             $em->flush();
@@ -221,4 +200,38 @@ class PostController extends AbstractController
             ],400);
         }
     }
+
+    /**
+     * @Route("posts/user/lists",name ="list_user_posts", methods={"GET"})
+     */
+    public function getAllUserPosts()
+    : JsonResponse
+    {
+
+        // récuperation des données
+        $all_user_posts = $this->postService->AllUserPosts($this->getUser());
+
+        return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
+
+    }
+
+
+    /**
+     * @Route("posts/user",name ="create_user_post", methods={"POST"})
+     */
+    public function createUserPost(
+        Request $request,
+        ValidatorInterface $validator,
+        SerializerInterface $serializer,
+        EntityManagerInterface $em)
+    : JsonResponse
+    {
+       // $post =$serializer->deserialize($request->getContent(),Post::class,'json');
+        //($serializer);
+
+        return $this->postService->registerUserPost($this->getUser(),$request,$validator,$serializer);
+
+    }
+
+
 }
