@@ -13,8 +13,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use phpDocumentor\Reflection\Types\Object_;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -50,17 +49,8 @@ class PostServices extends GeneralServices
 
     }
 
-    /**
-     * persist et fluch un objet en base de données
-     * @param  $object
-     */
-    public  function PF($object){
-        //--- register
-        //dd($object);
-        $this->entityManager->persist($object);
-        $this->entityManager->flush();
 
-    }
+
     /**
      * Récuperation de tous les posts d'un user
      * @param Object $user
@@ -74,7 +64,6 @@ class PostServices extends GeneralServices
         return $all_user_posts;
     }
 
-
     /**
      * Enrefistre le post dun user
      * @param object $user
@@ -85,43 +74,18 @@ class PostServices extends GeneralServices
      */
     public function registerUserPost(object $user,Request $request,ValidatorInterface $validator ){
 
-        try {
 
-            //--- récupération du contenu
-            $post = $this->getSerializer($request,Post::class);
+        //--- récupération du contenu
+        $post = $this->getSerializer($request,Post::class);
 
-            //--- validation
-//            $errors = $validator->validate($post);
-//            if(count($errors) > 0){
-//
-//                // envoie des erreur en json
-//                return $this->json( $errors,400);
-//            }
-            $this->getDataValidate($post);
+        //--- validation
+        $errors = $validator->validate($post);
+        $this->countAllErrors($errors);
 
-            $post->setAuthor($user);
-            $this->PF($post);
+        $post->setAuthor($user);
+        $this->PersistAndFlush($post);
 
-
-
-
-
-            return $this->json($post,200,[
-                'Content-type' => 'Application/json',
-            ],['groups' => 'post_read']);
-
-
-
-
-        }catch (NotEncodableValueException $notEncodableValueException){
-
-            return $this->json([
-                'statue' =>  400,
-                'message' => $notEncodableValueException
-            ],400);
-        }
+        return $post;
 
     }
-
-
 }

@@ -74,7 +74,11 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("posts/",name ="create_post", methods={"POST"})
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param SerializerInterface $serializer
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
      */
     public function createPost(
         Request $request,
@@ -124,7 +128,6 @@ class PostController extends AbstractController
                 'message' => $notEncodableValueException
             ],400);
         }
-
     }
 
     /**
@@ -202,36 +205,43 @@ class PostController extends AbstractController
     }
 
     /**
-     * @Route("posts/user/lists",name ="list_user_posts", methods={"GET"})
+     * @return JsonResponse
+     * @Route ("posts/user/lists",name ="list_user_posts", methods={"GET"})
      */
     public function getAllUserPosts()
     : JsonResponse
     {
 
-        // récuperation des données
+        // récupération des données
         $all_user_posts = $this->postService->AllUserPosts($this->getUser());
 
         return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
-
     }
 
-
     /**
-     * @Route("posts/user",name ="create_user_post", methods={"POST"})
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @return JsonResponse
+     * @Route ("posts/user",name ="create_user_post", methods={"POST"})
      */
     public function createUserPost(
         Request $request,
-        ValidatorInterface $validator,
-        SerializerInterface $serializer,
-        EntityManagerInterface $em)
+        ValidatorInterface $validator)
     : JsonResponse
     {
-       // $post =$serializer->deserialize($request->getContent(),Post::class,'json');
-        //($serializer);
+        try {
+            $post = $this->postService->registerUserPost($this->getUser(),$request,$validator);
 
-        return $this->postService->registerUserPost($this->getUser(),$request,$validator,$serializer);
+            return $this->json($post,200,[
+                'Content-type' => 'Application/json',
+            ],['groups' => 'post_read']);
 
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' => 400,
+                'message' => $notEncodableValueException
+            ],400);
+        }
     }
-
-
 }

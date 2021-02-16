@@ -10,25 +10,30 @@ use Symfony\Component\Serializer\Annotation\Groups;
  */
 Trait Timerr
 {
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups("post_read")
+     */
+    protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups("post_read")
      */
-    private $createdAt;
+    protected $updateAt;
 
     /**
-     * @ORM\Column(type="datetime")
-     * @Groups("post_read")
+     * @return \DateTimeInterface|null
      */
-    private $updateAt;
-
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
+    /**
+     * @param \DateTimeInterface $createdAt
+     * @return self
+     */
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -36,11 +41,18 @@ Trait Timerr
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getUpdateAt(): ?\DateTimeInterface
     {
         return $this->updateAt;
     }
 
+    /**
+     * @param \DateTimeInterface $updateAt
+     * @return self
+     */
     public function setUpdateAt(\DateTimeInterface $updateAt): self
     {
         $this->updateAt = $updateAt;

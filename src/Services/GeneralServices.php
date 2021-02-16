@@ -8,10 +8,10 @@
 
 namespace App\Services;
 
+use App\Entity\Post;
+
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\Mapping\Entity;
-use phpDocumentor\Reflection\Types\Object_;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -23,7 +23,6 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -79,31 +78,32 @@ class GeneralServices
         return $object_deserialize = $serial->deserialize($request->getContent(),$class,'json');
     }
 
-
     /**
-     * @param Object $object
-     * @return bool|JsonResponse
+     * @param $errors
+     * @return JsonResponse
      */
-    protected function getDataValidate(Object $object){
-        //--- validation
-        dump('dump 1',$object);
-
-        $errors = $this->validator->validate($object);
+    public function countAllErrors($errors){
         if(count($errors) > 0){
 
             // envoie des erreur en json
             return $this->json( $errors,400);
         }
-        else {
-
-            return true;
-
-        }
     }
 
     /**
-     * @internal
-     * @required
+     * persist et fluch un objet en base de données
+     * @param  $object
+     */
+    public  function PersistAndFlush($object){
+        //--- register
+        $this->entityManager->persist($object);
+        $this->entityManager->flush();
+
+    }
+
+    /**
+     * @param ContainerInterface $container
+     * @return null|ContainerInterface
      */
     public function setContainer(ContainerInterface $container): ?ContainerInterface
     {
@@ -114,7 +114,11 @@ class GeneralServices
     }
 
     /**
-     * Returns a JsonResponse that uses the serializer component if enabled, or json_encode.
+     * @param $data
+     * @param int $status
+     * @param array $headers
+     * @param array $context
+     * @return JsonResponse
      */
     protected function json($data, int $status = 200, array $headers = [], array $context = []): jsonResponse
     {
