@@ -68,14 +68,14 @@ class GeneralServices
      * @param string $class
      * @return mixed
      */
-    protected function getSerializer(Request $request,string $class){
+    protected function getSerializer(Request $request,string $class,$format = 'json', $options = [] ){
 
         $encoders = [new XmlEncoder(), new JsonEncoder()];
         $normalizers = [new ObjectNormalizer()];
 
         $serial =  new Serializer($normalizers, $encoders);
 
-        return $object_deserialize = $serial->deserialize($request->getContent(),$class,'json');
+        return $object_deserialize = $serial->deserialize($request->getContent(),$class,$format,$options);
     }
 
     /**

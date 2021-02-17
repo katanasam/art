@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Serializer\Exception\NotEncodableValueException;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -58,6 +59,8 @@ class PostController extends AbstractController
         return $this->json($this->postRepository->findAll(),200,[],["groups"=>"post_read"]);
 
     }
+
+
     /**
      * display un post unique avec images,commentaires,user
      * @Route("posts/{post_id<[0-9]+>}",name ="show_post", methods={"GET","POST"})
@@ -67,6 +70,7 @@ class PostController extends AbstractController
         Post $post)
     : JsonResponse
     {
+
 
         return $this->json($post,200,[
             'Content-type' => 'Application/json',
@@ -79,6 +83,7 @@ class PostController extends AbstractController
      * @param SerializerInterface $serializer
      * @param EntityManagerInterface $em
      * @return JsonResponse
+     * @Route ("posts/",name ="create_post", methods={"POST"})
      */
     public function createPost(
         Request $request,
@@ -131,6 +136,12 @@ class PostController extends AbstractController
     }
 
     /**
+     * @param Post $post
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param SerializerInterface $serializer
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
      * @Route("posts/edit/{post_id<[0-9]+>}",name ="edit_post", methods={"PUT"})
      * @Entity("post", expr="repository.find(post_id)")
      */
@@ -171,6 +182,9 @@ class PostController extends AbstractController
     }
 
     /**
+     * @param Post $post
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
      * @return JsonResponse
      * @Route("posts/{post_id<[0-9]+>}",name ="delete_post", methods={"DELETE"})
      * @Entity("post", expr="repository.find(post_id)")
@@ -218,6 +232,7 @@ class PostController extends AbstractController
         return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
     }
 
+
     /**
      * @param Request $request
      * @param ValidatorInterface $validator
@@ -243,5 +258,74 @@ class PostController extends AbstractController
                 'message' => $notEncodableValueException
             ],400);
         }
+    }
+
+    /**
+     * @param Post $post
+     * @param Request $request
+     * @return JsonResponse
+     * @Route("posts/user/edit/{post_id<[0-9]+>}",name ="edit_user_post", methods={"PUT"})
+     * @Entity("post", expr="repository.find(post_id)")
+     */
+    public function EditUserPost(
+        Post $post,
+        Request $request)
+    : JsonResponse
+    {
+
+        try {
+
+            $post = $this->postService->registerModifUserPost($request,$post,$this->getUser());
+
+            if(!$post instanceof Post){
+                return $this->json([
+                    'statue' =>  400,
+                    'message' => 'ceci nest pas votre post !  ACCEES DENIED'
+                ],400);
+            }
+
+            return $this->json($post,200,
+                ['Content-type' => 'Application/json',
+                ],['groups' => 'post_read']
+            );
+
+
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' =>  400,
+                'message' => $notEncodableValueException
+            ],400);
+        }
+    }
+
+    /**
+     * @param Post $post
+     * @param EntityManagerInterface $em
+     * @return JsonResponse
+     * @return JsonResponse
+     * @Route("posts/user/{post_id<[0-9]+>}",name ="delete_user_post", methods={"DELETE"})
+     * @Entity("post", expr="repository.find(post_id)")
+     */
+    public function deleteUserPost(
+        Post $post,
+        EntityManagerInterface $em )
+    : JsonResponse
+    {
+
+        //autorisation dedition user peut suprimer le post
+
+
+            if ($post){
+
+                //supression des images associer au post en base de donneées et dans le dossier
+
+                //--- deregister
+                $em->remove($post);
+                $em->flush();
+
+                return $this->json(["supression du post id {$post->getId()} "],200);
+            }
+
     }
 }

@@ -13,11 +13,10 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Serializer\Exception\NotEncodableValueException;
-use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+
 
 /**
  * Class PostServices
@@ -65,15 +64,13 @@ class PostServices extends GeneralServices
     }
 
     /**
-     * Enrefistre le post dun user
+     * Enregistre le post dun user
      * @param object $user
      * @param Request $request
      * @param ValidatorInterface $validator
-     * @param SerializerInterface $serializer
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function registerUserPost(object $user,Request $request,ValidatorInterface $validator ){
-
 
         //--- récupération du contenu
         $post = $this->getSerializer($request,Post::class);
@@ -88,4 +85,30 @@ class PostServices extends GeneralServices
         return $post;
 
     }
+
+
+    public  function  registerModifUserPost(Request $request,Post $post,User $user){
+
+        //--- récuperation du post concerner
+
+        //--- déserialize
+        $post_modify = $this->getSerializer($request,Post::class,'json',[AbstractNormalizer::OBJECT_TO_POPULATE => $post]);
+
+        //--- autorisation d'édition user
+
+      //  dump($user->getEmail());
+       // dump($post_modify->getAuthor()->getEmail());
+        if($user->getid() === $post_modify->getAuthor()->getid()){
+            $this->entityManager->flush();
+            return $post_modify;
+        }
+
+        //--- register
+        return  false;
+
+
+    }
+
+
+
 }
