@@ -12,6 +12,7 @@ use App\Entity\Post;
 
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -50,6 +51,11 @@ class GeneralServices
     protected $validator;
 
     /**
+     * @var ManagerRegistry
+     */
+    public $managerRegistry;
+
+    /**
      * GeneralServices constructor.
      * @param NormalizerInterface $normalizer
      * @param EntityManagerInterface $entityManager
@@ -57,10 +63,13 @@ class GeneralServices
     public function __construct(
         NormalizerInterface $normalizer,
         EntityManagerInterface $entityManager,
-        ValidatorInterface $validator )
+        ValidatorInterface $validator,
+        ManagerRegistry $managerRegistry)
     {
         $this->entityManager = $entityManager;
         $this->validator = $validator;
+
+        $this->managerRegistry = $managerRegistry;
     }
 
     /**

@@ -96,8 +96,6 @@ class PostServices extends GeneralServices
 
         //--- autorisation d'édition user
 
-      //  dump($user->getEmail());
-       // dump($post_modify->getAuthor()->getEmail());
         if($user->getid() === $post_modify->getAuthor()->getid()){
             $this->entityManager->flush();
             return $post_modify;
@@ -109,6 +107,23 @@ class PostServices extends GeneralServices
 
     }
 
+    /**
+     * @param Post $post
+     * @param User $user
+     */
+    public function deletePostUserAndAllImage(Post $post,User $user){
+        dump($post);
+        dd( $post->getAuthor());
+
+        //supréssion des images associer au post en base de donneées et dans le dossier
+        if($user->getid() === $post->getAuthor()->getid()){
+
+            dd(count($post->getImages()));
+
+            //--- diregister
+            //$this->PersistAndFlush($post);
+        }
+    }
 
 
 }

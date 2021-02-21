@@ -33,6 +33,7 @@ class Image
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups("post_read")
      */
     private $location;
 

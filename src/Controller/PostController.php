@@ -301,31 +301,21 @@ class PostController extends AbstractController
 
     /**
      * @param Post $post
-     * @param EntityManagerInterface $em
-     * @return JsonResponse
      * @return JsonResponse
      * @Route("posts/user/{post_id<[0-9]+>}",name ="delete_user_post", methods={"DELETE"})
      * @Entity("post", expr="repository.find(post_id)")
      */
     public function deleteUserPost(
-        Post $post,
-        EntityManagerInterface $em )
+        Post $post)
     : JsonResponse
     {
 
-        //autorisation dedition user peut suprimer le post
+        //--- autorisation dedition user peut suprimer le post
 
 
-            if ($post){
+        $this->postService->deletePostUserAndAllImage($post,$this->getUser());
 
-                //supression des images associer au post en base de donneées et dans le dossier
-
-                //--- deregister
-                $em->remove($post);
-                $em->flush();
-
-                return $this->json(["supression du post id {$post->getId()} "],200);
-            }
+        return $this->json(["Supression du post id {$post->getId()} "],200);
 
     }
 }
