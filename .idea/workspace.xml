@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9afe9637-517e-4a05-83fb-cf38bc720b43" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Services/FileManager.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/Services/FileServices.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/FileController.php" afterPath="$PROJECT_DIR$/src/Controller/FileController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Controller/PostController.php" afterPath="$PROJECT_DIR$/src/Controller/PostController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Entity/Image.php" afterPath="$PROJECT_DIR$/src/Entity/Image.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Services/GeneralServices.php" afterPath="$PROJECT_DIR$/src/Services/GeneralServices.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Services/PostServices.php" afterPath="$PROJECT_DIR$/src/Services/PostServices.php" />
-    </list>
+    <list default="true" id="9afe9637-517e-4a05-83fb-cf38bc720b43" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -195,9 +186,9 @@
     <servers />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-88" />
-    <option name="y" value="143" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="10" />
+    <option name="y" value="58" />
     <option name="width" value="1458" />
     <option name="height" value="1139" />
   </component>
@@ -341,17 +332,17 @@
       <workItem from="1613590770951" duration="10817000" />
       <workItem from="1613669462898" duration="9773000" />
       <workItem from="1613851702079" duration="9091000" />
-      <workItem from="1613928348523" duration="5759000" />
+      <workItem from="1613928348523" duration="5921000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="124569000" />
+    <option name="totallyTimeSpent" value="124731000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="22" width="1936" height="1186" extended-state="6" />
+    <frame x="10" y="58" width="1458" height="1139" extended-state="0" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.12793177" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17167382" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
