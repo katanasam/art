@@ -34,7 +34,19 @@ class FileManager extends Filesystem
 
     public function renameFile(UploadedFile $uploadedFile,UserInterface $user,$type){
         //  nommage du file
-        return $filename = $user->getUsername().'_'.$type.'_'.time().'-'.$uploadedFile->getClientOriginalName().'.'.$uploadedFile->guessClientExtension();
+        //return $filename = $user->getUsername().'_'.$type.'_'.time().'-'.$uploadedFile->getClientOriginalName().'.'.$uploadedFile->guessClientExtension();
+        return $filename = $user->getUsername().'_'.$type.'_'.time().'.'.$uploadedFile->guessClientExtension();
+
+    }
+
+    public function fileLocation($filename,UserInterface $user,$type){
+        //  nommage du file
+        //return $filename = $user->getUsername().'_'.$type.'_'.time().'-'.$uploadedFile->getClientOriginalName().'.'.$uploadedFile->guessClientExtension();
+        return $location = 'public/'.$user->getUsername().'/'.$type.'/'.$filename;
+
+    }
+    public function deleteFile($filename){
+        unlink($filename);
 
     }
 }

@@ -22,6 +22,9 @@ class FileController extends AbstractController
      */
     private  $fileManager;
 
+    /**
+     * @var FileServices
+     */
     private  $fileServices;
 
     public function __construct(FileManager $fileManager, FileServices $fileServices)
@@ -67,6 +70,7 @@ class FileController extends AbstractController
         ],200);
     }
 
+
     /**
      * @param Request $request
      * @Route("file/{type}/{content_id}", name="add_file_on",methods={"POST"})
@@ -77,25 +81,22 @@ class FileController extends AbstractController
 
         // lowercase et controle
         // verification que le contenu soit le sien avant d'ajouter
-        dump($type,$content_id);
-
-
 
 
         // récup images
-        //dd($request);
         $file =$request->files->get('image');
-      //  dump($request->files->all());
-      // dd(count($file));
 
-        //  nommage du file
-        //$filename = time().'-'.$file->getClientOriginalName().'.'.$file->guessClientExtension();
+        // dump($request->files->all());
+        // dd(count($file));
+
+        // nommage du file
+        // $filename = time().'-'.$file->getClientOriginalName().'.'.$file->guessClientExtension();
         $filename = $this->fileManager->renameFile($file,$this->getUser(),'post');
+        $location = $this->fileManager->fileLocation($filename,$this->getUser(),'post');
 
-       $content = $this->fileServices->linkImgToContent('Post',$content_id, $filename);
+        $content = $this->fileServices->linkImgToContent('Post',$content_id, $filename,$location);
 
-
-        // et déplacement
+        // déplacement
         $file->move( $this->fileServices->gessDirectory($this->getUser(),$type),$filename);
 
 

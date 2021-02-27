@@ -12,13 +12,17 @@ class FileServices extends \App\Services\GeneralServices {
 
     const PUBLIC = 'public/';
 
-    public function __construct(\Symfony\Component\Serializer\Normalizer\NormalizerInterface $normalizer, \Doctrine\ORM\EntityManagerInterface $entityManager, \Symfony\Component\Validator\Validator\ValidatorInterface $validator, ManagerRegistry $managerRegistry)
+    /**
+     * @var FileManager
+     */
+    private  $fileManager;
+
+    public function __construct(\Symfony\Component\Serializer\Normalizer\NormalizerInterface $normalizer, \Doctrine\ORM\EntityManagerInterface $entityManager, \Symfony\Component\Validator\Validator\ValidatorInterface $validator, ManagerRegistry $managerRegistry,FileManager $fileManager)
     {
         parent::__construct($normalizer, $entityManager, $validator, $managerRegistry);
     }
 
-    public function linkImgToContent($type,$content_id, $filename) {
-
+    public function linkImgToContent($type,$content_id, $filename,$location) {
 
         // recuperation du repository en fonction du type
         // ajout de limage au contenue
@@ -31,12 +35,12 @@ class FileServices extends \App\Services\GeneralServices {
        $image = new \App\Entity\Image();
        $image->setImageName($filename);
        $image->setTypeContent($type);
-       //
+       $image->setLocation($location);
 
-       // dump($content);
+        // dump($content);
         $image->setPost($content);
 
-       // dd($image);
+        // dd($image);
         $this->PersistAndFlush($image);
 
 
@@ -82,8 +86,6 @@ class FileServices extends \App\Services\GeneralServices {
 
                 return $directory;
             }
-
-
 
         } else {
            return $this->createDirectory($user,$type);

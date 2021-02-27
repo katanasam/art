@@ -11,9 +11,11 @@ namespace App\Services;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Repository\ImageRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
@@ -35,19 +37,70 @@ class PostServices extends GeneralServices
     protected $entityManager;
 
     /**
+     * @var
+     */
+    private $imageRP;
+
+    /**
      * PostServices constructor.
      * @param PostRepository $postRepository
      * @param EntityManagerInterface $entityManager
+     * @param ImageRepository $imageRepository
      */
     public function __construct(
         PostRepository $postRepository,
-        EntityManagerInterface $entityManager)
+        EntityManagerInterface $entityManager,
+        ImageRepository $imageRepository)
     {
         $this->entityManager = $entityManager;
         $this->postRP = $postRepository;
+        $this->imageRP = $imageRepository;
 
     }
 
+    /**
+     * Enregistre le post dun user
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function registerPost(Request $request,ValidatorInterface $validator ){
+
+        //--- récupération du contenu
+        $post = $this->getSerializer($request,Post::class);
+
+        //--- validation
+        $errors = $validator->validate($post);
+        $this->countAllErrors($errors);
+
+        $this->PersistAndFlush($post);
+
+        return $post;
+
+    }
+
+
+
+    /**
+     * @param Request $request
+     * @param Post $post
+     * @param User $user
+     * @return bool|mixed
+     */
+    public  function  registerModifPost(Request $request,Post $post){
+
+        //--- récuperation du post concerner
+
+        //--- déserialize
+        $post_modify = $this->getSerializer($request,Post::class,'json',[AbstractNormalizer::OBJECT_TO_POPULATE => $post]);
+
+        //--- autorisation d'édition user
+
+            $this->entityManager->flush();
+            return $post_modify;
+
+
+    }
 
 
     /**
@@ -87,6 +140,12 @@ class PostServices extends GeneralServices
     }
 
 
+    /**
+     * @param Request $request
+     * @param Post $post
+     * @param User $user
+     * @return bool|mixed
+     */
     public  function  registerModifUserPost(Request $request,Post $post,User $user){
 
         //--- récuperation du post concerner
@@ -107,23 +166,35 @@ class PostServices extends GeneralServices
 
     }
 
+
     /**
      * @param Post $post
      * @param User $user
      */
     public function deletePostUserAndAllImage(Post $post,User $user){
-        dump($post);
-        dd( $post->getAuthor());
+
 
         //supréssion des images associer au post en base de donneées et dans le dossier
-        if($user->getid() === $post->getAuthor()->getid()){
+        if($user->getId() === $post->getAuthor()->getId()) {
 
-            dd(count($post->getImages()));
+            while ( !empty($post->getImages()->getValues())){
 
-            //--- diregister
-            //$this->PersistAndFlush($post);
+
+
+              $img = $this->imageRP->findBy(['id' =>$post->getImages()->first()->getId()])[0];
+                unlink($post->getImages()->current()->getLocation());
+
+                $post->removeImage($post->getImages()->current());
+
+                 $this->entityManager->remove($img);
+
+            }
+
+
+            $this->entityManager->remove($post);
+            $this->entityManager->flush();
+
         }
     }
-
 
 }

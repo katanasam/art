@@ -111,6 +111,17 @@ class GeneralServices
     }
 
     /**
+     * persist et fluch un objet en base de données
+     * @param  $object
+     */
+    public  function RemoveAndFlush($object){
+        //--- register
+        $this->entityManager->remove($object);
+        $this->entityManager->flush();
+
+    }
+
+    /**
      * @param ContainerInterface $container
      * @return null|ContainerInterface
      */
