@@ -14,8 +14,9 @@ use App\Entity\User;
 use App\Repository\ImageRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
@@ -41,18 +42,26 @@ class PostServices extends GeneralServices
      */
     private $imageRP;
 
+
     /**
      * PostServices constructor.
-     * @param PostRepository $postRepository
+     * @param NormalizerInterface $normalizer
      * @param EntityManagerInterface $entityManager
+     * @param ValidatorInterface $validator
+     * @param ManagerRegistry $managerRegistry
+     * @param PostRepository $postRepository
      * @param ImageRepository $imageRepository
      */
-    public function __construct(
-        PostRepository $postRepository,
-        EntityManagerInterface $entityManager,
-        ImageRepository $imageRepository)
+    public function __construct(NormalizerInterface $normalizer,
+                                EntityManagerInterface $entityManager,
+                                ValidatorInterface $validator,
+                                ManagerRegistry $managerRegistry,
+                                PostRepository $postRepository,
+                                ImageRepository $imageRepository)
     {
-        $this->entityManager = $entityManager;
+        parent::__construct($normalizer, $entityManager, $validator, $managerRegistry);
+
+
         $this->postRP = $postRepository;
         $this->imageRP = $imageRepository;
 

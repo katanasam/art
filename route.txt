@@ -3,11 +3,11 @@
     add_file           POST       ANY      ANY    /api/file
     add_file_on        POST       ANY      ANY    /api/file/{type}/{content_id}
 
-    list_posts         GET        ANY      ANY    /api/posts/lists
-    show_post          GET|POST   ANY      ANY    /api/posts/{post_id}
-    create_post        POST       ANY      ANY    /api/posts/
-    edit_post          PUT        ANY      ANY    /api/posts/edit/{post_id}
-    delete_post        DELETE     ANY      ANY    /api/posts/{post_id}
+    list_posts         GET        ANY      ANY    /api/free/posts/lists
+    show_post          GET|POST   ANY      ANY    /api/free/posts/{post_id}
+    create_post        POST       ANY      ANY    /api/free/posts
+    edit_post          PUT        ANY      ANY    /api/free/posts/edit/{post_id}
+    delete_post        DELETE     ANY      ANY    /api/free/posts/{post_id}
 
     list_user_posts    GET        ANY      ANY    /api/posts/user/lists
     create_user_post   POST       ANY      ANY    /api/posts/user

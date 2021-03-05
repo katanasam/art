@@ -47,7 +47,7 @@ class FreeController extends AbstractController
     }
 
     /**
-     * Récupération de tous les posts dans la table
+     * Récupération de tous les posts dans la table base de données
      * @Route("posts/lists",name ="list_posts", methods={"GET"})
      */
     public function getAllPosts( )
@@ -77,7 +77,7 @@ class FreeController extends AbstractController
      * @param Request $request
      * @param ValidatorInterface $validator
      * @return JsonResponse
-     * @Route ("posts/",name ="create_post", methods={"POST"})
+     * @Route ("posts",name ="create_post", methods={"POST"})
      */
     public function createPost(
         Request $request,

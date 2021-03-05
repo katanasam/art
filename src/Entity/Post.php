@@ -57,9 +57,23 @@ class Post
      */
     private $author;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Like::class, mappedBy="post")
+     * @Groups("post_read")
+     */
+    private $likes;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="post")
+     * @Groups("post_read")
+     */
+    private $comment;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->likes = new ArrayCollection();
+        $this->comment = new ArrayCollection();
     }
 
 
@@ -131,6 +145,66 @@ class Post
     public function setAuthor(?User $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Like[]
+     */
+    public function getLikes(): Collection
+    {
+        return $this->likes;
+    }
+
+    public function addLike(Like $like): self
+    {
+        if (!$this->likes->contains($like)) {
+            $this->likes[] = $like;
+            $like->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLike(Like $like): self
+    {
+        if ($this->likes->removeElement($like)) {
+            // set the owning side to null (unless already changed)
+            if ($like->getPost() === $this) {
+                $like->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComment(): Collection
+    {
+        return $this->comment;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comment->contains($comment)) {
+            $this->comment[] = $comment;
+            $comment->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comment->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPost() === $this) {
+                $comment->setPost(null);
+            }
+        }
 
         return $this;
     }

@@ -19,32 +19,39 @@ class FileManager extends Filesystem
         return $directory;
     }
 
+
     public function uploadFile (UploadedFile $uploadedFile){
 
         $directory = $this->getDirectory();
         $filename = md5(uniqid()).'.'.$uploadedFile->guessExtension();
         dump($filename);
 
-        // deplacement
+        // déplacement
         $uploadedFile->move($directory,$filename);
 
         return $filename;
     }
 
 
-    public function renameFile(UploadedFile $uploadedFile,UserInterface $user,$type){
-        //  nommage du file
-        //return $filename = $user->getUsername().'_'.$type.'_'.time().'-'.$uploadedFile->getClientOriginalName().'.'.$uploadedFile->guessClientExtension();
+    public function renameFile(UploadedFile $uploadedFile,UserInterface $user =null ,$type =null){
+
+        // nommage du file
+        // return $filename = $user->getUsername().'_'.$type.'_'.time().'-'.$uploadedFile->getClientOriginalName().'.'.$uploadedFile->guessClientExtension();
+
         return $filename = $user->getUsername().'_'.$type.'_'.time().'.'.$uploadedFile->guessClientExtension();
 
     }
 
+
     public function fileLocation($filename,UserInterface $user,$type){
-        //  nommage du file
-        //return $filename = $user->getUsername().'_'.$type.'_'.time().'-'.$uploadedFile->getClientOriginalName().'.'.$uploadedFile->guessClientExtension();
+
+        // nommage du file
+        // return $filename = $user->getUsername().'_'.$type.'_'.time().'-'.$uploadedFile->getClientOriginalName().'.'.$uploadedFile->guessClientExtension();
         return $location = 'public/'.$user->getUsername().'/'.$type.'/'.$filename;
 
     }
+
+
     public function deleteFile($filename){
         unlink($filename);
 
