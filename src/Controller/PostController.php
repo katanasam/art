@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Entity\User;
 use App\Repository\PostRepository;
 use App\Services\PostServices;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
@@ -46,22 +47,33 @@ class PostController extends AbstractController
 
 
     /**
+     * @param User $user
      * Renvoie les posts d'un seul user
      * @return JsonResponse
-     * @Route ("posts/user/lists",name ="list_user_posts", methods={"GET"})
+     * @Route ("posts/lists/{user_id<[0-9]+>}",name ="list_user_posts", methods={"GET"})
+     * @Entity("user", expr="repository.find(user_id)")
      */
-    public function getAllUserPosts()
+    public function getAllUserPosts(User $user)
     : JsonResponse
     {
+        // renvoie les post du user connecter , manque les posts d'un user en particulier. $user
+        if (empty($user)){
+
+            // récupération des données
+            $all_user_posts = $this->postService->AllUserPosts($this->getUser());
+
+        }
 
         // récupération des données
-        $all_user_posts = $this->postService->AllUserPosts($this->getUser());
+        $all_user_posts = $this->postService->AllUserPosts($user);
 
         return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
     }
 
 
     /**
+     *
+     *  creation d un post par un user
      * @param Request $request
      * @param ValidatorInterface $validator
      * @return JsonResponse
@@ -73,6 +85,7 @@ class PostController extends AbstractController
     : JsonResponse
     {
         try {
+            // enregistre le post et controle Validation
             $post = $this->postService->registerUserPost($this->getUser(),$request,$validator);
 
             return $this->json($post,200,[
@@ -82,13 +95,14 @@ class PostController extends AbstractController
         }catch (NotEncodableValueException $notEncodableValueException){
 
             return $this->json([
-                'statue' => 400,
+                'status' => 400,
                 'message' => $notEncodableValueException
             ],400);
         }
     }
 
     /**
+     * Modifiaction d'un post existant
      * @param Post $post
      * @param Request $request
      * @return JsonResponse
@@ -105,10 +119,12 @@ class PostController extends AbstractController
 
             $post = $this->postService->registerModifUserPost($request,$post,$this->getUser());
 
+            // si n'a le poste récuperer est en base de données
+            // si n'a l'utilisateur a l'authorisation de modifier le post
             if(!$post instanceof Post){
                 return $this->json([
-                    'statue' =>  400,
-                    'message' => 'ceci nest pas votre post !  ACCEES DENIED'
+                    'status' =>  400,
+                    'message' => 'ceci n-est pas votre POST !  ACCEES DENIED'
                 ],400);
             }
 
@@ -121,13 +137,14 @@ class PostController extends AbstractController
         }catch (NotEncodableValueException $notEncodableValueException){
 
             return $this->json([
-                'statue' =>  400,
+                'status' =>  400,
                 'message' => $notEncodableValueException
             ],400);
         }
     }
 
     /**
+     * suprime le post , les images , les commentaires ,les likes
      * @param Post $post
      * @return JsonResponse
      * @Route("posts/user/{post_id<[0-9]+>}",name ="delete_user_post", methods={"DELETE"})
@@ -138,8 +155,8 @@ class PostController extends AbstractController
     : JsonResponse
     {
 
-        //--- autorisation dedition user peut suprimer le post
-        $this->postService->deletePostUserAndAllImage($post,$this->getUser());
+        //--- autorisation suprimer le post et les image lier ainsi quue les commentaires et les likes
+        $this->postService->deletePostUserAndAllLinks($post,$this->getUser());
 
         return $this->json(["Supression du post id "],200);
 

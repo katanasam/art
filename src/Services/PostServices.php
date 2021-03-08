@@ -11,6 +11,7 @@ namespace App\Services;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Repository\CommentRepository;
 use App\Repository\ImageRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -42,6 +43,8 @@ class PostServices extends GeneralServices
      */
     private $imageRP;
 
+    private $commnentRP;
+
 
     /**
      * PostServices constructor.
@@ -57,13 +60,16 @@ class PostServices extends GeneralServices
                                 ValidatorInterface $validator,
                                 ManagerRegistry $managerRegistry,
                                 PostRepository $postRepository,
-                                ImageRepository $imageRepository)
+                                ImageRepository $imageRepository,
+    CommentRepository $commentRepository)
     {
         parent::__construct($normalizer, $entityManager, $validator, $managerRegistry);
 
 
         $this->postRP = $postRepository;
         $this->imageRP = $imageRepository;
+        $this->commnentRP = $commentRepository;
+
 
     }
 
@@ -93,7 +99,6 @@ class PostServices extends GeneralServices
     /**
      * @param Request $request
      * @param Post $post
-     * @param User $user
      * @return bool|mixed
      */
     public  function  registerModifPost(Request $request,Post $post){
@@ -138,9 +143,13 @@ class PostServices extends GeneralServices
         $post = $this->getSerializer($request,Post::class);
 
         //--- validation
+        //-- validation basée sur les @Assert dans lentité
         $errors = $validator->validate($post);
+
+        //--  compte juste les erreurs
         $this->countAllErrors($errors);
 
+        //-- ajout le l'author du post
         $post->setAuthor($user);
         $this->PersistAndFlush($post);
 
@@ -169,7 +178,7 @@ class PostServices extends GeneralServices
             return $post_modify;
         }
 
-        //--- register
+        //--- return une erreur
         return  false;
 
 
@@ -180,17 +189,16 @@ class PostServices extends GeneralServices
      * @param Post $post
      * @param User $user
      */
-    public function deletePostUserAndAllImage(Post $post,User $user){
+    public function deletePostUserAndAllLinks(Post $post,User $user){
 
 
         //supréssion des images associer au post en base de donneées et dans le dossier
         if($user->getId() === $post->getAuthor()->getId()) {
 
+            // 1- supressions des images
             while ( !empty($post->getImages()->getValues())){
 
-
-
-              $img = $this->imageRP->findBy(['id' =>$post->getImages()->first()->getId()])[0];
+                $img = $this->imageRP->findBy(['id' =>$post->getImages()->first()->getId()])[0];
                 unlink($post->getImages()->current()->getLocation());
 
                 $post->removeImage($post->getImages()->current());
@@ -198,6 +206,21 @@ class PostServices extends GeneralServices
                  $this->entityManager->remove($img);
 
             }
+
+            // 2- supressions des commentaires
+
+            while (!empty($post->getComment()->getValues())){
+
+                $commment = $this->commnentRP->findBy(['id' =>$post->getComment()->first()->getId()])[0];
+
+                $post->removeComment($post->getComment()->current());
+
+                $this->entityManager->remove($commment);
+
+            }
+
+
+            // 2- supressions des likes
 
 
             $this->entityManager->remove($post);

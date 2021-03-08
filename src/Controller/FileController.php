@@ -71,6 +71,8 @@ class FileController extends AbstractController
     public function AddFileOn(Request $request, $type,$content_id): JsonResponse
     {
 
+
+
         // lowercase et controle
         // verification que le contenu soit le sien avant d'ajouter
 
@@ -97,8 +99,6 @@ class FileController extends AbstractController
             $filename = $this->fileManager->renameFile($file,$this->getUser(),'post');
             $location = $this->fileManager->fileLocation($filename,$this->getUser(),'post');
             $content = $this->fileServices->linkImgToContent('Post',$content_id, $filename,$location);
-
-            // déplacement
             $file->move( $this->fileServices->gessDirectory($this->getUser(),$type),$filename);
 
 //            $output[] = $content;
