@@ -6,6 +6,7 @@ use App\Entity\Like;
 use App\Entity\Post;
 use App\Repository\LikeRepository;
 use App\Services\LikeServices;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -56,6 +57,7 @@ class LikeController extends AbstractController
      * @param $content_id
      * @return JsonResponse
      * @Route ("like/{type}/{content_id}",name ="like_up", methods={"GET"})
+     * @ParamConverter("type", converter="RouteParaConverter")
      */
     public function likeOn(
         Request $request,
@@ -94,32 +96,43 @@ class LikeController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     * @param ValidatorInterface $validator
      * @param $type
      * @param $content_id
      * @return JsonResponse
-     * @Route ("like/{type}/{content_id}",name ="like_Down", methods={"DELETE"})
+     * @Route ("like//{type}/{content_id}",name ="like_Down", methods={"DELETE"})
      */
     public function likeDown(
-        Request $request,
         $type,$content_id
     )
     : JsonResponse
     {
-        // dd($content_id,$type);
-//        try {
-//
-//            return $this->json($like,200,[
-//                'Content-type' => 'Application/json',
-//            ],['groups' => 'post_read']);
-//
-//        }catch (NotEncodableValueException $notEncodableValueException){
-//
-//            return $this->json([
-//                'statue' => 400,
-//                'message' => $notEncodableValueException
-//            ],400);
-//        }
+        try {
+
+            // quelle type de content correspond
+            $post = $this->getDoctrine()->getRepository(Post::class)->find($content_id);
+
+            if ($post->getLikes()){
+                foreach ( $post->getLikes()->getValues() as $like){
+
+                   // dd($like->getAuthor()->getUsername());
+                    if ($like->getAuthor()->getUsername() == $this->getUser()->getUsername()){
+                        $post->removeLike($like);
+                        $this->getDoctrine()->getManager()->remove($like);
+                        $this->getDoctrine()->getManager()->flush();
+                    }
+                }
+            }
+
+            return $this->json([$post],200,[
+                'Content-type' => 'Application/json',
+            ],['groups' => 'post_read']);
+
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' => 400,
+                'message' => $notEncodableValueException
+            ],400);
+        }
     }
 }
