@@ -50,22 +50,15 @@ class PostController extends AbstractController
      * @param User $user
      * Renvoie les posts d'un seul user
      * @return JsonResponse
-     * @Route ("posts/lists/{user_id<[0-9]+>}",name ="list_user_posts", methods={"GET"})
-     * @Entity("user", expr="repository.find(user_id)")
+     * @Route ("posts/lists/user",name ="list_user_posts", methods={"GET"})
      */
-    public function getAllUserPosts(User $user)
-    : JsonResponse
+    public function getAllUserPosts( ) : JsonResponse
     {
         // renvoie les post du user connecter , manque les posts d'un user en particulier. $user
-        if (empty($user)){
 
             // récupération des données
             $all_user_posts = $this->postService->AllUserPosts($this->getUser());
 
-        }
-
-        // récupération des données
-        $all_user_posts = $this->postService->AllUserPosts($user);
 
         return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
     }

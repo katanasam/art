@@ -7,6 +7,8 @@ use App\Entity\Traits\Timerr;
 use App\Repository\LikeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass=LikeRepository::class)
@@ -27,6 +29,7 @@ class Like
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("post_read")
+     * @Assert\NotBlank
      */
     private $type;
 
@@ -45,6 +48,7 @@ class Like
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="likes")
      * @ORM\JoinColumn(nullable=false)
+     * @Groups("post_read")
      */
     private $author;
 

@@ -2,9 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Like;
+use App\Entity\Post;
+use App\Repository\LikeRepository;
+use App\Services\LikeServices;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Exception\NotEncodableValueException;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Class PostController
@@ -13,6 +21,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LikeController extends AbstractController
 {
+    private $likeRepository ;
+
+    private $likeService;
+
+    public function __construct(LikeRepository $likeRepository,
+                                LikeServices $likeServices)
+    {
+        $this->likeRepository = $likeRepository;
+        $this->likeService = $likeServices;
+    }
+
+
+
     /**
      * Retourne lintegralite des likes peut importe le contenue
      * @Route("like/lists", name="like", methods={"GET"})
@@ -21,10 +42,84 @@ class LikeController extends AbstractController
     {
 
 
-
         return $this->json([
             'message' => 'Welcome to your new controller!',
             'path' => 'src/Controller/LikeController.php',
         ]);
+    }
+
+
+    /**
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param $type
+     * @param $content_id
+     * @return JsonResponse
+     * @Route ("like/{type}/{content_id}",name ="like_up", methods={"GET"})
+     */
+    public function likeOn(
+        Request $request,
+        ValidatorInterface $validator,
+        $type,$content_id
+    )
+    : JsonResponse
+    {
+        try {
+//            $like = $this->likeService->registerlike($this->getUser(),
+//                    $request,$validator,$type,$content_id);
+
+            $like = new  Like();
+            $like->setAuthor($this->getUser());
+            $post = $this->getDoctrine()->getRepository(Post::class)->find($content_id);
+
+            $like->setPost($post);
+            $like->setType($type);
+            $like->setCreatedAt(new \DateTimeImmutable());
+
+            $this->getDoctrine()->getManager()->persist($like);
+            $this->getDoctrine()->getManager()->flush();
+
+
+            return $this->json([$post,$like],200,[
+                'Content-type' => 'Application/json',
+            ],['groups' => 'post_read']);
+
+        }catch (NotEncodableValueException $notEncodableValueException){
+
+            return $this->json([
+                'statue' => 400,
+                'message' => $notEncodableValueException
+            ],400);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param ValidatorInterface $validator
+     * @param $type
+     * @param $content_id
+     * @return JsonResponse
+     * @Route ("like/{type}/{content_id}",name ="like_Down", methods={"DELETE"})
+     */
+    public function likeDown(
+        Request $request,
+        $type,$content_id
+    )
+    : JsonResponse
+    {
+        // dd($content_id,$type);
+//        try {
+//
+//            return $this->json($like,200,[
+//                'Content-type' => 'Application/json',
+//            ],['groups' => 'post_read']);
+//
+//        }catch (NotEncodableValueException $notEncodableValueException){
+//
+//            return $this->json([
+//                'statue' => 400,
+//                'message' => $notEncodableValueException
+//            ],400);
+//        }
     }
 }

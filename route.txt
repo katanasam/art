@@ -9,10 +9,13 @@
     edit_post          PUT        ANY      ANY    /api/free/posts/edit/{post_id}
     delete_post        DELETE     ANY      ANY    /api/free/posts/{post_id}
 
-    list_user_posts    GET        ANY      ANY    /api/posts/user/lists
+
+    list_user_posts    GET        ANY      ANY    /api/posts/lists/{user}
+    list_user_posts    GET        ANY      ANY    /api/posts/lists/user
     create_user_post   POST       ANY      ANY    /api/posts/user
     edit_user_post     PUT        ANY      ANY    /api/posts/user/edit/{post_id}
     delete_user_post   DELETE     ANY      ANY    /api/posts/user/{post_id}
+
 
     user_login         POST       ANY      ANY    /api/auth/login_check
     user_logout        GET        ANY      ANY    /api/auth/logout
