@@ -59,6 +59,8 @@ class GeneralServices
      * GeneralServices constructor.
      * @param NormalizerInterface $normalizer
      * @param EntityManagerInterface $entityManager
+     * @param ValidatorInterface $validator
+     * @param ManagerRegistry $managerRegistry
      */
     public function __construct(
         NormalizerInterface $normalizer,
@@ -153,6 +155,25 @@ class GeneralServices
         return new JsonResponse($data, $status, $headers);
     }
 
+    /**
+     * @param $type
+     * @param $content_id
+     * @return null|object|string
+     */
+    public function defineTypeContent($type, $content_id){
+
+        $content ='';
+
+        switch ($type){
+            case 'post':
+                $content = $this->managerRegistry->getRepository(Post::class )->find($content_id);
+
+
+            default;
+        }
+
+        return $content;
+    }
 
 
 }

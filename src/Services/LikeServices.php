@@ -9,6 +9,7 @@
 namespace App\Services;
 
 
+use App\Entity\Like;
 use App\Repository\LikeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -59,7 +60,7 @@ class LikeServices extends GeneralServices
         $errors = $validator->validate($like);
         $this->countAllErrors($errors);
 
-        $this->setTypeContent($like,  $type,  $content_id);
+       // $this->setTypeContent($like,  $type,  $content_id);
         $like->setAuthor($user);
         //  dd($comment);
 
@@ -70,21 +71,18 @@ class LikeServices extends GeneralServices
     }
 
     public function setTypeContent(Comment $comment,string  $type, int $content_id){
-//
-//        switch ($type){
-//
-//            case 'post':
-//
-//                $post = $this->managerRegistry->getRepository(Post::class)->find($content_id);
-//                return $comment->setPost($post);
-//                break;
-//
-//
-//            default :
-//                return false;
-//        }
-//
-//
+
+        $like = new  Like();
+        $like->setAuthor($this->getUser());
+
+        $post = $this->getDoctrine()->getRepository(Post::class)->find($content_id);
+
+        $like->setPost($post);
+
+        $like->setType($type);
+        $like->setCreatedAt(new \DateTimeImmutable());
+
+        $this->PersistAndFlush($like);
     }
 
 

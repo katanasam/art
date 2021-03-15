@@ -6,7 +6,6 @@ use App\Entity\Like;
 use App\Entity\Post;
 use App\Repository\LikeRepository;
 use App\Services\LikeServices;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,7 +56,6 @@ class LikeController extends AbstractController
      * @param $content_id
      * @return JsonResponse
      * @Route ("like/{type}/{content_id}",name ="like_up", methods={"GET"})
-     * @ParamConverter("type", converter="RouteParaConverter")
      */
     public function likeOn(
         Request $request,
@@ -72,9 +70,10 @@ class LikeController extends AbstractController
 
             $like = new  Like();
             $like->setAuthor($this->getUser());
-            $post = $this->getDoctrine()->getRepository(Post::class)->find($content_id);
 
+            $post = $this->getDoctrine()->getRepository(Post::class)->find($content_id);
             $like->setPost($post);
+
             $like->setType($type);
             $like->setCreatedAt(new \DateTimeImmutable());
 
@@ -99,7 +98,7 @@ class LikeController extends AbstractController
      * @param $type
      * @param $content_id
      * @return JsonResponse
-     * @Route ("like//{type}/{content_id}",name ="like_Down", methods={"DELETE"})
+     * @Route ("like/{type}/{content_id}",name ="like_Down", methods={"DELETE"})
      */
     public function likeDown(
         $type,$content_id

@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 /**
  * Class PostController
  * @package App\Controller
- * @Route("api/")
+ * @Route("api/post")
  */
 class PostController extends AbstractController
 {
@@ -47,10 +47,9 @@ class PostController extends AbstractController
 
 
     /**
-     * @param User $user
      * Renvoie les posts d'un seul user
      * @return JsonResponse
-     * @Route ("posts/lists/user",name ="list_user_posts", methods={"GET"})
+     * @Route ("/lists/user",name ="list_user_posts", methods={"GET"})
      */
     public function getAllUserPosts( ) : JsonResponse
     {
@@ -63,14 +62,12 @@ class PostController extends AbstractController
         return $this->json($all_user_posts,200,[],["groups"=>"post_read"]);
     }
 
-
     /**
-     *
      *  creation d un post par un user
      * @param Request $request
      * @param ValidatorInterface $validator
      * @return JsonResponse
-     * @Route ("posts/user",name ="create_user_post", methods={"POST"})
+     * @Route ("/user",name ="create_user_post", methods={"POST"})
      */
     public function createUserPost(
         Request $request,
@@ -99,7 +96,7 @@ class PostController extends AbstractController
      * @param Post $post
      * @param Request $request
      * @return JsonResponse
-     * @Route("posts/user/edit/{post_id<[0-9]+>}",name ="edit_user_post", methods={"PUT"})
+     * @Route("/user/edit/{post_id<[0-9]+>}",name ="edit_user_post", methods={"PUT"})
      * @Entity("post", expr="repository.find(post_id)")
      */
     public function EditUserPost(
@@ -112,8 +109,8 @@ class PostController extends AbstractController
 
             $post = $this->postService->registerModifUserPost($request,$post,$this->getUser());
 
-            // si n'a le poste récuperer est en base de données
-            // si n'a l'utilisateur a l'authorisation de modifier le post
+            // si n'i le poste récuperer est en base de données
+            // si n'i l'utilisateur a l'authorisation de modifier le post
             if(!$post instanceof Post){
                 return $this->json([
                     'status' =>  400,
@@ -140,7 +137,7 @@ class PostController extends AbstractController
      * suprime le post , les images , les commentaires ,les likes
      * @param Post $post
      * @return JsonResponse
-     * @Route("posts/user/{post_id<[0-9]+>}",name ="delete_user_post", methods={"DELETE"})
+     * @Route("/user/{post_id<[0-9]+>}",name ="delete_user_post", methods={"DELETE"})
      * @Entity("post", expr="repository.find(post_id)")
      */
     public function deleteUserPost(

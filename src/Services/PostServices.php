@@ -13,6 +13,7 @@ use App\Entity\Post;
 use App\Entity\User;
 use App\Repository\CommentRepository;
 use App\Repository\ImageRepository;
+use App\Repository\LikeRepository;
 use App\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,12 +40,19 @@ class PostServices extends GeneralServices
     protected $entityManager;
 
     /**
-     * @var
+     * @var ImageRepository
      */
     private $imageRP;
 
+    /**
+     * @var CommentRepository
+     */
     private $commnentRP;
 
+    /**
+     * @var LikeRepository
+     */
+    private $likeRP;
 
     /**
      * PostServices constructor.
@@ -61,7 +69,8 @@ class PostServices extends GeneralServices
                                 ManagerRegistry $managerRegistry,
                                 PostRepository $postRepository,
                                 ImageRepository $imageRepository,
-    CommentRepository $commentRepository)
+                                CommentRepository $commentRepository,
+                                LikeRepository $likeRepository)
     {
         parent::__construct($normalizer, $entityManager, $validator, $managerRegistry);
 
@@ -69,7 +78,7 @@ class PostServices extends GeneralServices
         $this->postRP = $postRepository;
         $this->imageRP = $imageRepository;
         $this->commnentRP = $commentRepository;
-
+        $this->likeRP = $likeRepository;
 
     }
 
@@ -94,8 +103,6 @@ class PostServices extends GeneralServices
 
     }
 
-
-
     /**
      * @param Request $request
      * @param Post $post
@@ -112,8 +119,6 @@ class PostServices extends GeneralServices
 
             $this->entityManager->flush();
             return $post_modify;
-
-
     }
 
 
@@ -157,7 +162,6 @@ class PostServices extends GeneralServices
 
     }
 
-
     /**
      * @param Request $request
      * @param Post $post
@@ -180,10 +184,7 @@ class PostServices extends GeneralServices
 
         //--- return une erreur
         return  false;
-
-
     }
-
 
     /**
      * @param Post $post
@@ -204,7 +205,6 @@ class PostServices extends GeneralServices
                 $post->removeImage($post->getImages()->current());
 
                  $this->entityManager->remove($img);
-
             }
 
             // 2- supressions des commentaires
@@ -216,17 +216,22 @@ class PostServices extends GeneralServices
                 $post->removeComment($post->getComment()->current());
 
                 $this->entityManager->remove($commment);
-
             }
 
+            // 3- supressions des likes
+            while ( !empty($post->getLikes()->getValues())){
 
-            // 2- supressions des likes
+                $like = $this->likeRP->findBy(['id' =>$post->getLikes()->first()->getId()])[0];
 
+                $post->removeLike($post->getLikes()->current());
 
-            $this->entityManager->remove($post);
-            $this->entityManager->flush();
+                $this->entityManager->remove($like);
+            }
+
+            $this->RemoveAndFlush($post);
 
         }
+
     }
 
 }

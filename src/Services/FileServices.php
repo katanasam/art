@@ -66,19 +66,21 @@ class FileServices extends \App\Services\GeneralServices {
         // renvoi dans la reponse
         // le user doit etre le creator
 
-        $content = $this->managerRegistry->getRepository($this->returnClassName($type))->find($content_id);
+        $content = $this->defineTypeContent($type, $content_id);
 
-       $image = new \App\Entity\Image();
-       $image->setImageName($filename);
-       $image->setTypeContent($type);
-       $image->setLocation($location);
+        $image = new \App\Entity\Image();
+        $image->setImageName($filename);
+        $image->setLocation($location);
+
+
+
+        $image->setTypeContent($type);
 
         // dump($content);
         $image->setPost($content);
 
         // dd($image);
         $this->PersistAndFlush($image);
-
 
         if (!$content) {
             return false;
